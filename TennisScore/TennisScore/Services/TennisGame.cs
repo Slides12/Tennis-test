@@ -81,7 +81,7 @@ namespace TennisScore.Services
         {
             Console.Clear();
             Console.SetCursorPosition(50, 5);
-            Console.WriteLine("Exiting...                                                                                                               ");
+            Console.WriteLine("Exiting!                                                                                                               ");
         }
 
         public void ResetGame()
