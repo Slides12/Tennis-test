@@ -140,7 +140,7 @@ namespace TennisScore.View
             switch (playerPoint)
             {
                 case 0:
-                    return "Love";
+                    return "Love             ";
                     break;
                 case 1:
                     return "15    ";
