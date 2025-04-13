@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TennisScore.Models;
+using TennisScore.View;
 
 namespace TennisScore.Services
 {
@@ -11,7 +12,7 @@ namespace TennisScore.Services
     {
         private Player player1;
         private Player player2;
-        private bool deuce = false;
+        private TennisGUI gui;
 
         public TennisGame(Player player1, Player player2)
         {
@@ -22,6 +23,7 @@ namespace TennisScore.Services
 
         public void StartGame()
         {
+            gui = new TennisGUI(this.player1, this.player2, this);
             Console.Clear();
             Console.SetCursorPosition(10, 2);
             Console.WriteLine("Press leftArrow to give point to the left player, and rightArrow for the right player. Exit with ESC.");
@@ -39,31 +41,31 @@ namespace TennisScore.Services
             if (key == ConsoleKey.Spacebar)
             {
                 Console.Clear();
-                WriteScore();
+                gui.WriteScore();
 
                 while (true)
                 {
-                    ConsoleKeyInfo keyInfo = Console.ReadKey(intercept: true);
+                    ConsoleKey keyInfo = Console.ReadKey(intercept: true).Key;
 
-                    if (keyInfo.Key == ConsoleKey.LeftArrow)
+                    if (keyInfo == ConsoleKey.LeftArrow)
                     {
                         this.player1.CurrentScore ++;
                     }
-                    else if (keyInfo.Key == ConsoleKey.RightArrow)
+                    else if (keyInfo == ConsoleKey.RightArrow)
                     {
                         this.player2.CurrentScore ++;
                     }
-                    else if (keyInfo.Key == ConsoleKey.R)
+                    else if (keyInfo == ConsoleKey.R)
                     {
                         ResetGame();
                     }
-                    else if (keyInfo.Key == ConsoleKey.Escape)
+                    else if (keyInfo == ConsoleKey.Escape)
                     {
                         ExitGame();
                         break;
                     }
 
-                    WriteScore();
+                    gui.WriteScore();
                 }
             }
             else if (key == ConsoleKey.Escape)
@@ -73,21 +75,7 @@ namespace TennisScore.Services
         }
 
 
-        public void WriteScore()
-        {
-            Console.SetCursorPosition(30, 5);
-            Console.WriteLine($"{player1.PlayerName}, Score:{player1.CurrentScore}|Set:{player1.Set} -||-  Set:{player2.Set}|Score:{player2.CurrentScore}, {player2.PlayerName}");
-            Console.SetCursorPosition(50, 7);
-            Console.WriteLine("Call");
-            if(!deuce)
-            {
-                GetPlayerCall();
-            }
-            else
-            {
-                GetDeuceCall();
-            }
-        }
+       
 
         private void ExitGame()
         {
@@ -96,7 +84,7 @@ namespace TennisScore.Services
             Console.WriteLine("Exiting...                                                                                                               ");
         }
 
-        private void ResetGame()
+        public void ResetGame()
         {
             player1.CurrentScore = 0;
             player1.Set = 0;
@@ -104,86 +92,7 @@ namespace TennisScore.Services
             player2.Set = 0;
             StartGame();
         }
-
-        private void GetPlayerCall()
-        {
-            if(player1.CurrentScore != player2.CurrentScore)
-            {
-                Console.SetCursorPosition(30, 8);
-                Console.WriteLine(GetCall(player1.CurrentScore));
-                Console.SetCursorPosition(70, 8);
-                Console.WriteLine(GetCall(player2.CurrentScore));
-            }
-            else
-            {
-                if (player1.CurrentScore == 4 && player1.CurrentScore == player2.CurrentScore)
-                {
-                    deuce = true;
-                    GetDeuceCall();
-                }
-                else
-                {
-                    Console.SetCursorPosition(30, 8);
-                    Console.WriteLine(GetCall(player1.CurrentScore));
-                    Console.SetCursorPosition(70, 8);
-                    Console.WriteLine("all        ");
-                }
-            }
-        }
-
-        private void GetDeuceCall()
-        {
-            if(player1.CurrentScore == player2.CurrentScore)
-            {
-                Console.SetCursorPosition(30, 8);
-                Console.WriteLine("                           ");
-                Console.SetCursorPosition(70, 8);
-                Console.WriteLine("                           ");
-                Console.SetCursorPosition(50, 8);
-                Console.WriteLine("Deuce        ");
-            }
-            else if(player1.CurrentScore > player2.CurrentScore)
-            {
-                Console.SetCursorPosition(30, 8);
-                Console.WriteLine("Advantage");
-                Console.SetCursorPosition(70, 8);
-                Console.WriteLine(player2.CurrentScore);
-            }
-            else
-            {
-                Console.SetCursorPosition(30, 8);
-                Console.WriteLine(player1.CurrentScore);
-                Console.SetCursorPosition(70, 8);
-                Console.WriteLine("Advantage");
-            }
-        }
-
-
-        private string GetCall(int playerPoint)
-        {
-
-            switch(playerPoint)
-            {
-                case 0:
-                    return "Love";
-                    break;
-                case 1:
-                    return "15    ";
-                    break;
-                case 2:
-                    return "30    ";
-                    break;
-                case 3:
-                    return "40    ";
-                    break;
-                case 4:
-                    return "game    ";
-                    break;
-                default:
-                    return "        ";
-                    break;
-            }
-        }
+        
 
     }
 }
