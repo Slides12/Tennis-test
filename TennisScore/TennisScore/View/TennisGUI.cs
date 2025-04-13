@@ -24,6 +24,7 @@ namespace TennisScore.View
 
         public void WriteScore()
         {
+            
             Console.SetCursorPosition(30, 5);
             Console.WriteLine($"{player1.PlayerName}, Score:{player1.CurrentScore}|Set:{player1.Set} -||-  Set:{player2.Set}|Score:{player2.CurrentScore}, {player2.PlayerName}");
             Console.SetCursorPosition(50, 7);
@@ -101,6 +102,11 @@ namespace TennisScore.View
                 player1.Set++;
                 Console.SetCursorPosition(40, 9);
                 Console.WriteLine($"{player1.PlayerName} wins the game!");
+                Console.SetCursorPosition(50, 10);
+                Console.WriteLine("                   ");
+                Console.SetCursorPosition(50, 10);
+                Console.WriteLine(GetScore());
+
                 ResetGameScores();
                 WriteScore();
             }
@@ -109,6 +115,11 @@ namespace TennisScore.View
                 player2.Set++;
                 Console.SetCursorPosition(40, 9);
                 Console.WriteLine($"{player2.PlayerName} wins the game!");
+                Console.SetCursorPosition(50, 10);
+                Console.WriteLine("                   ");
+                Console.SetCursorPosition(50, 10);
+                Console.WriteLine(GetScore());
+
                 ResetGameScores();
                 WriteScore();
             }
@@ -176,5 +187,35 @@ namespace TennisScore.View
                 }
             }
         }
+
+        public string GetScore()
+        {
+            if (player1.CurrentScore >= 3 && player2.CurrentScore >= 3)
+            {
+                if (player1.CurrentScore == player2.CurrentScore)
+                {
+                    return "Deuce";
+                }
+                else if (player1.CurrentScore == player2.CurrentScore + 1)
+                {
+                    return $"Advantage {player1.PlayerName}";
+                }
+                else if (player2.CurrentScore == player1.CurrentScore + 1)
+                {
+                    return $"Advantage {player2.PlayerName}";
+                }
+            }
+
+            string player1Call = GetCall(player1.CurrentScore).Trim();
+            string player2Call = GetCall(player2.CurrentScore).Trim();
+
+            if (player1.CurrentScore == player2.CurrentScore)
+            {
+                return $"{player1Call}-All";
+            }
+
+            return $"{player1Call} - {player2Call}";
+        }
+
     }
 }
