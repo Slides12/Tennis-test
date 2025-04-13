@@ -102,9 +102,9 @@ namespace TennisScore.View
                 player1.Set++;
                 Console.SetCursorPosition(40, 9);
                 Console.WriteLine($"{player1.PlayerName} wins the game!");
-                Console.SetCursorPosition(50, 10);
+                Console.SetCursorPosition(50, 11);
                 Console.WriteLine("                   ");
-                Console.SetCursorPosition(50, 10);
+                Console.SetCursorPosition(50, 11);
                 Console.WriteLine(GetScore());
 
                 ResetGameScores();
@@ -115,9 +115,9 @@ namespace TennisScore.View
                 player2.Set++;
                 Console.SetCursorPosition(40, 9);
                 Console.WriteLine($"{player2.PlayerName} wins the game!");
-                Console.SetCursorPosition(50, 10);
+                Console.SetCursorPosition(50, 11);
                 Console.WriteLine("                   ");
-                Console.SetCursorPosition(50, 10);
+                Console.SetCursorPosition(50, 11);
                 Console.WriteLine(GetScore());
 
                 ResetGameScores();
@@ -126,13 +126,13 @@ namespace TennisScore.View
 
             if (player1.Set == 3)
             {
-                Console.SetCursorPosition(40, 11);
+                Console.SetCursorPosition(40, 12);
                 Console.WriteLine($"{player1.PlayerName} wins the match!");
                 EndMatch();
             }
             else if (player2.Set == 3)
             {
-                Console.SetCursorPosition(40, 11);
+                Console.SetCursorPosition(40, 12);
                 Console.WriteLine($"{player2.PlayerName} wins the match!");
                 EndMatch();
             }
